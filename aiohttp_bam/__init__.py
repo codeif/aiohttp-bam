@@ -16,14 +16,26 @@ def parse_auth_header(request):
     return auth
 
 
-def bam_factory(login, password):
+def bam_factory(login, password, bypass_ws=False):
+    """创建一个basic auth的middleware
+
+    :param login: basic auth username
+    :param password: basic auth password
+    :param bypass_ws: 绕过websocket请求，默认为Flase，不绕过
+
+    :return: A aiohttp middleware
+    """
     @web.middleware
     async def wrapper(request, handler):
+        if bypass_ws:
+            connection = request.headers.get('Connection')
+            if connection == 'Upgrade':
+                return await handler(request)
+
         auth = parse_auth_header(request)
         if not (auth and auth.login == login and auth.password == password):
             return handle_401()
 
-        resp = await handler(request)
-        return resp
+        return await handler(request)
 
     return wrapper

@@ -6,7 +6,7 @@ with open("README.rst", encoding="utf-8") as f:
 
 setup(
     name="aiohttp-bam",
-    version="0.0.1",
+    version="0.0.2",
     url="https://github.com/codeif/aiohttp-bam",
     description="aiohttp basic auth middleware.",
     long_description=readme,

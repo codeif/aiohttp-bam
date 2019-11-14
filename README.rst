@@ -3,6 +3,16 @@ aiohttp basic auth middleware
 
 HTTP basic authentication middleware for aiohttp.
 
+Parameters
+------------
+
+def bam_factory(login, password, bypass_ws=False)
+    创建一个basic auth的middleware
+
+    :login: username
+    :password: password
+    :bypass_ws: 绕过websocket请求，默认为Flase，不绕过
+
 Usage
 --------
 
